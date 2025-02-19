@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.finalprojectofntovictory.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "C:\\Users\\NTO\\Final-PROJECT-Of-NTO\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "Final PROJECT Of NTO (Victory) [Testing]"
+        }
+      }
+    }
+  ]
+}
