@@ -85,8 +85,7 @@ public class TeleportManager : MonoBehaviour
             nushSlon.transform.position = Vector3.Lerp(startPos, endPos, s);
             currentPos = nushSlon.transform.position;
 
-            transform.root.position = Vector3.Lerp(startPos, endPos, s);
-            currentPos = transform.root.position;
+            
 
             yield return null;
         }
