@@ -19,7 +19,8 @@ public class TeleportManager : MonoBehaviour
 
     [SerializeField]
     private LayerMask groundMask;
-
+    [SerializeField]
+    private LayerMask carMask;
     private GameObject sphere;
     private void Awake()
     {
@@ -59,11 +60,11 @@ public class TeleportManager : MonoBehaviour
 
             if (Physics.Raycast(transform.position, transform.forward, out hit, 10, groundMask))
             {
-                // Если рейкаст попал на пол, перемещаем объект
+
                 movement = StartCoroutine(SmoothMove(nushSlon.transform.position, hit.point, 0.1f));
             }
 
-            movement = StartCoroutine(SmoothMove(transform.root.position, hit.point, 0.1f));
+
 
         }
         else
