@@ -25,7 +25,7 @@ public class CarController : MonoBehaviour
 
     [SerializeField]
     private SteamVR_Action_Boolean fdButton;
-    
+
     [SerializeField]
     private SteamVR_Action_Boolean backButton;
 
@@ -36,13 +36,15 @@ public class CarController : MonoBehaviour
 
     private float brakeInput;
     private float currentBrakeForce = 0;
-    private bool fd = true;
+    public bool fd = true;
 
     [SerializeField]
     private CircularDrive steeringWheel;
 
     [SerializeField]
     private AudioSource idleMotorSound;
+    [SerializeField]
+    private AudioSource backMotorSound;
 
     private void FixedUpdate()
     {
@@ -77,18 +79,26 @@ public class CarController : MonoBehaviour
 
     private void HandleMotor()
     {
-        if (fd == true){
+        if (fd == !fd) 
+        {
+
+            backMotorSound.Play();
+            
+        
+
+        frontLeftWheelCollider.motorTorque = throttle * motorForce;
+        frontRightWheelCollider.motorTorque = throttle * motorForce;
+        rearLeftWheelCollider.motorTorque = throttle * motorForce;
+        rearRightWheelCollider.motorTorque = throttle * motorForce;
+    }
+        if (fd == fd)
+        {
+            idleMotorSound.Play();
+
             frontLeftWheelCollider.motorTorque = -throttle * motorForce;
             frontRightWheelCollider.motorTorque = -throttle * motorForce;
             rearLeftWheelCollider.motorTorque = -throttle * motorForce;
             rearRightWheelCollider.motorTorque = -throttle * motorForce;
-        }
-        if (fd == false)
-        {
-            frontLeftWheelCollider.motorTorque = throttle * motorForce;
-            frontRightWheelCollider.motorTorque = throttle * motorForce;
-            rearLeftWheelCollider.motorTorque = throttle * motorForce;
-            rearRightWheelCollider.motorTorque = throttle * motorForce;
         }
     }
 
