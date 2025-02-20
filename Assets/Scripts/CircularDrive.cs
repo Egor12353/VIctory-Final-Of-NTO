@@ -105,8 +105,15 @@ namespace Valve.VR.InteractionSystem
 
         private Interactable interactable;
 
-		//-------------------------------------------------
-		private void Freeze( Hand hand )
+		public SteamVR_ActionSet activateActionSetOnAttach;
+		public GameObject[] Hands;
+
+		public bool IsGrabbed = false;
+
+		public CircularDrive[] checkToDeactivate;
+
+        //-------------------------------------------------
+        private void Freeze( Hand hand )
 		{
 			frozen = true;
 			frozenAngle = outAngle;
@@ -248,7 +255,14 @@ namespace Valve.VR.InteractionSystem
             if (grabbedWithType == GrabTypes.None && startingGrabType != GrabTypes.None)
             {
                 grabbedWithType = startingGrabType;
-                // Trigger was just pressed
+				// Trigger was just pressed
+				if (activateActionSetOnAttach != null)
+				{
+					activateActionSetOnAttach.Activate();
+				}
+				HandViewState(false);
+
+				IsGrabbed = true;
                 lastHandProjected = ComputeToTransformProjected( hand.hoverSphereTransform );
 
 				if ( hoverLock )
@@ -266,8 +280,24 @@ namespace Valve.VR.InteractionSystem
 			}
             else if (grabbedWithType != GrabTypes.None && isGrabEnding)
 			{
-				// Trigger was just released
-				if ( hoverLock )
+                // Trigger was just released
+				if (checkToDeactivate.Length > 0)
+				{
+					foreach (var circularDrive in checkToDeactivate)
+					{
+						if (circularDrive != this && circularDrive.IsGrabbed)
+						{
+							goto nextStep;
+						}
+					}
+				}
+				if (activateActionSetOnAttach != null)
+				{
+					activateActionSetOnAttach.Deactivate();
+				}
+      nextStep: HandViewState(true);
+				IsGrabbed = false;
+                if ( hoverLock )
 				{
 					hand.HoverUnlock(interactable);
 					handHoverLocked = null;
@@ -294,6 +324,7 @@ namespace Valve.VR.InteractionSystem
 			// Need a non-zero distance from the hand to the center of the CircularDrive
 			if ( toTransform.sqrMagnitude > 0.0f )
 			{
+				worldPlaneNormal = transform.up;
 				toTransformProjected = Vector3.ProjectOnPlane( toTransform, worldPlaneNormal ).normalized;
 			}
 			else
@@ -339,7 +370,8 @@ namespace Valve.VR.InteractionSystem
 
 			gSphere.name = string.Format( "actual_{0}", (int)( ( 1.0f - red.r ) * 10.0f ) );
 			gSphere.transform.position = xForm.position;
-			gSphere.transform.rotation = Quaternion.Euler( 0.0f, 0.0f, 0.0f );
+			// Change
+			gSphere.transform.localRotation = Quaternion.Euler( 0.0f, 0.0f, 0.0f );
 			gSphere.transform.localScale = new Vector3( 0.004f, 0.004f, 0.004f );
 			gSphere.gameObject.GetComponent<Renderer>().material.color = red;
 
@@ -368,7 +400,8 @@ namespace Valve.VR.InteractionSystem
 
 			gSphere.name = string.Format( "projed_{0}", (int)( ( 1.0f - green.g ) * 10.0f ) );
 			gSphere.transform.position = transform.position + toTransformProjected * 0.25f;
-			gSphere.transform.rotation = Quaternion.Euler( 0.0f, 0.0f, 0.0f );
+			// Change
+			gSphere.transform.localRotation = Quaternion.Euler( 0.0f, 0.0f, 0.0f );
 			gSphere.transform.localScale = new Vector3( 0.004f, 0.004f, 0.004f );
 			gSphere.gameObject.GetComponent<Renderer>().material.color = green;
 
@@ -433,11 +466,19 @@ namespace Valve.VR.InteractionSystem
 		//-------------------------------------------------
 		// Updates the Debug TextMesh with the linear mapping value and the angle
 		//-------------------------------------------------
-		private void UpdateAll()
+		public void UpdateAll()
 		{
 			UpdateLinearMapping();
 			UpdateGameObject();
 			UpdateDebugText();
+			if (outAngle > maxAngle)
+			{
+				outAngle = maxAngle;
+			}
+			if (outAngle < minAngle)
+			{ 
+				outAngle = minAngle;
+			}
 		}
 
 
@@ -480,6 +521,7 @@ namespace Valve.VR.InteractionSystem
 					else
 					{
 						Vector3 cross = Vector3.Cross( lastHandProjected, toHandProjected ).normalized;
+						worldPlaneNormal = transform.up;
 						float dot = Vector3.Dot( worldPlaneNormal, cross );
 
 						float signedAngleDelta = absAngleDelta;
@@ -541,6 +583,17 @@ namespace Valve.VR.InteractionSystem
 							lastHandProjected = toHandProjected;
 						}
 					}
+				}
+			}
+		}
+		
+		private void HandViewState(bool state)
+		{
+			foreach (var hand in Hands)
+			{
+				foreach(var renderer in hand.transform.GetComponentsInChildren<SkinnedMeshRenderer>())
+				{
+					renderer.enabled = state;
 				}
 			}
 		}

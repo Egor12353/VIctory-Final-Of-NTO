@@ -50,6 +50,10 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/default/in/Incar",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
@@ -81,6 +85,26 @@
       "name": "/actions/mixedreality/in/ExternalCamera",
       "type": "pose",
       "requirement": "optional"
+    },
+    {
+      "name": "/actions/Car/in/Drive",
+      "type": "vector1"
+    },
+    {
+      "name": "/actions/Car/in/OutCar",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/Car/in/BrakeDrive",
+      "type": "vector1"
+    },
+    {
+      "name": "/actions/Car/in/ForwardPeredacha",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/Car/in/BackPeredacha",
+      "type": "boolean"
     }
   ],
   "action_sets": [
@@ -98,6 +122,10 @@
     },
     {
       "name": "/actions/mixedreality",
+      "usage": "single"
+    },
+    {
+      "name": "/actions/Car",
       "usage": "single"
     }
   ],

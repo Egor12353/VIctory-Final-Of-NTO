@@ -19,8 +19,7 @@ public class TeleportManager : MonoBehaviour
 
     [SerializeField]
     private LayerMask groundMask;
-    [SerializeField]
-    private LayerMask carMask;
+
     private GameObject sphere;
     private void Awake()
     {

@@ -20,7 +20,7 @@ public class EnterInCar : MonoBehaviour
     private Transform exitPoint;
 
     private bool enterButtonPressed = false;
-    private bool inDrive = false;
+    public bool inDrive = false;
 
     private Transform player;
     [SerializeField]
@@ -43,6 +43,10 @@ public class EnterInCar : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
+        if (other.CompareTag("Hand"))
+        {
+            print("Hand");
+        }
         if (other.CompareTag("Hand") && enterButton.GetStateDown(SteamVR_Input_Sources.RightHand) && !enterButtonPressed)
         {
             enterButtonPressed = true;

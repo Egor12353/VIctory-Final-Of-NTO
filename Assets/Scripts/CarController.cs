@@ -62,10 +62,10 @@ public class CarController : MonoBehaviour
 
     private void HandleMotor()
     {
-        frontLeftWheelCollider.motorTorque = throttle * motorForce;
-        frontRightWheelCollider.motorTorque = throttle * motorForce;
-        rearLeftWheelCollider.motorTorque = throttle * motorForce;
-        rearRightWheelCollider.motorTorque = throttle * motorForce;
+        frontLeftWheelCollider.motorTorque = -throttle * motorForce;
+        frontRightWheelCollider.motorTorque = -throttle * motorForce;
+        rearLeftWheelCollider.motorTorque = -throttle * motorForce;
+        rearRightWheelCollider.motorTorque = -throttle * motorForce;
     }
 
     private void HandleBrake()
