@@ -312,6 +312,11 @@
                },
                "mode" : "button",
                "path" : "/user/hand/right/input/b"
+            },
+            {
+               "inputs" : {},
+               "mode" : "button",
+               "path" : "/user/hand/left/input/x"
             }
          ]
       },
@@ -340,6 +345,55 @@
                },
                "mode" : "joystick",
                "path" : "/user/hand/right/input/joystick"
+            }
+         ]
+      },
+      "/actions/truck" : {
+         "sources" : [
+            {
+               "inputs" : {
+                  "pull" : {
+                     "output" : "/actions/truck/in/drive"
+                  }
+               },
+               "mode" : "trigger",
+               "path" : "/user/hand/right/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "pull" : {
+                     "output" : "/actions/truck/in/brakedrive"
+                  }
+               },
+               "mode" : "trigger",
+               "path" : "/user/hand/left/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/truck/in/outcar"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/b"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/truck/in/backperedacha"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/x"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/truck/in/forwardperedacha"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/y"
             }
          ]
       }

@@ -17,6 +17,7 @@ public class TrailerManager : MonoBehaviour
     {
         if (other.CompareTag("Trailer"))
         {
+            print("trailer");
             fixedCube.SetActive(true); 
             fixedSphere.SetActive(true);
             springSphere.GetComponent<MeshRenderer>().enabled = false;

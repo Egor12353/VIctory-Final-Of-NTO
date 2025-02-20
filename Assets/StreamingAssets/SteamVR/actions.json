@@ -105,6 +105,26 @@
     {
       "name": "/actions/Car/in/BackPeredacha",
       "type": "boolean"
+    },
+    {
+      "name": "/actions/Truck/in/Drive",
+      "type": "vector1"
+    },
+    {
+      "name": "/actions/Truck/in/BrakeDrive",
+      "type": "vector1"
+    },
+    {
+      "name": "/actions/Truck/in/OutCar",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/Truck/in/ForwardPeredacha",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/Truck/in/BackPeredacha",
+      "type": "boolean"
     }
   ],
   "action_sets": [
@@ -126,6 +146,10 @@
     },
     {
       "name": "/actions/Car",
+      "usage": "single"
+    },
+    {
+      "name": "/actions/Truck",
       "usage": "single"
     }
   ],

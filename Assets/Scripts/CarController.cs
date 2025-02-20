@@ -23,6 +23,12 @@ public class CarController : MonoBehaviour
     [SerializeField]
     private SteamVR_Action_Single brakeButton;
 
+    [SerializeField]
+    private SteamVR_Action_Boolean fdButton;
+    
+    [SerializeField]
+    private SteamVR_Action_Boolean backButton;
+
     private float throttle = 0;
 
     private float currentSettedSpeed = 0;
@@ -30,6 +36,7 @@ public class CarController : MonoBehaviour
 
     private float brakeInput;
     private float currentBrakeForce = 0;
+    private bool fd = true;
 
     [SerializeField]
     private CircularDrive steeringWheel;
@@ -39,6 +46,14 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (fdButton.GetStateDown(SteamVR_Input_Sources.LeftHand))
+        {
+            fd = true;
+        }
+        if (backButton.GetStateDown(SteamVR_Input_Sources.LeftHand))
+        {
+            fd = false;
+        }
         GetInput();
         HandleMotor();
         HandleSteering();
@@ -62,10 +77,19 @@ public class CarController : MonoBehaviour
 
     private void HandleMotor()
     {
-        frontLeftWheelCollider.motorTorque = -throttle * motorForce;
-        frontRightWheelCollider.motorTorque = -throttle * motorForce;
-        rearLeftWheelCollider.motorTorque = -throttle * motorForce;
-        rearRightWheelCollider.motorTorque = -throttle * motorForce;
+        if (fd == true){
+            frontLeftWheelCollider.motorTorque = -throttle * motorForce;
+            frontRightWheelCollider.motorTorque = -throttle * motorForce;
+            rearLeftWheelCollider.motorTorque = -throttle * motorForce;
+            rearRightWheelCollider.motorTorque = -throttle * motorForce;
+        }
+        if (fd == false)
+        {
+            frontLeftWheelCollider.motorTorque = throttle * motorForce;
+            frontRightWheelCollider.motorTorque = throttle * motorForce;
+            rearLeftWheelCollider.motorTorque = throttle * motorForce;
+            rearRightWheelCollider.motorTorque = throttle * motorForce;
+        }
     }
 
     private void HandleBrake()
