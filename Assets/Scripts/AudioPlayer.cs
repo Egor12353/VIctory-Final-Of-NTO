@@ -6,12 +6,14 @@ public class AudioPlayer : MonoBehaviour
 {
     [SerializeField]
     private AudioSource audio;
+    
+
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
+        
             audio.Play();
-        }
+        
+        
     }
 }
