@@ -37,14 +37,13 @@ public class CarController : MonoBehaviour
     private float brakeInput;
     private float currentBrakeForce = 0;
     public bool fd = true;
-
+    
     [SerializeField]
     private CircularDrive steeringWheel;
 
     [SerializeField]
     private AudioSource idleMotorSound;
-    [SerializeField]
-    private AudioSource backMotorSound;
+    public bool gorod = false;
 
     private void FixedUpdate()
     {
@@ -79,22 +78,22 @@ public class CarController : MonoBehaviour
 
     private void HandleMotor()
     {
-        if (fd == !fd) 
+        if (fd == false) 
         {
 
-            backMotorSound.Play();
-            
-        
 
+
+
+            gorod = false;
         frontLeftWheelCollider.motorTorque = throttle * motorForce;
         frontRightWheelCollider.motorTorque = throttle * motorForce;
         rearLeftWheelCollider.motorTorque = throttle * motorForce;
         rearRightWheelCollider.motorTorque = throttle * motorForce;
     }
-        if (fd == fd)
+        if (fd == true)
         {
-            idleMotorSound.Play();
 
+            gorod = true;
             frontLeftWheelCollider.motorTorque = -throttle * motorForce;
             frontRightWheelCollider.motorTorque = -throttle * motorForce;
             rearLeftWheelCollider.motorTorque = -throttle * motorForce;
