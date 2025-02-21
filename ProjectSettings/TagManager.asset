@@ -10,6 +10,9 @@ TagManager:
   - Scep
   - Trailer
   - Casseta
+  - Casseta2
+  - Casseta3
+  - Casseta4
   layers:
   - Default
   - TransparentFX

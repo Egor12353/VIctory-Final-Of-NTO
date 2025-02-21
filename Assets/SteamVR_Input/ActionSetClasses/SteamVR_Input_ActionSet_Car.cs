@@ -56,5 +56,13 @@ namespace Valve.VR
                 return SteamVR_Actions.car_BackPeredacha;
             }
         }
+        
+        public virtual SteamVR_Action_Boolean ExitScene
+        {
+            get
+            {
+                return SteamVR_Actions.car_ExitScene;
+            }
+        }
     }
 }
