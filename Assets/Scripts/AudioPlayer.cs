@@ -5,14 +5,14 @@ using UnityEngine;
 public class AudioPlayer : MonoBehaviour
 {
     [SerializeField]
-    private AudioSource audio;
+    private AudioSource audio2;
     
 
 
     private void Update()
     {
         
-            audio.Play();
+            audio2.Play();
         
         
     }

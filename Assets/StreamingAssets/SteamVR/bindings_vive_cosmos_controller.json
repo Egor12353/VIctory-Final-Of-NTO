@@ -4,6 +4,10 @@
    "app_key" : "application.generated.unity.finalprojectofntovictory.exe",
    "bindings" : {
       "/actions/buggy" : {
+         "chords" : [],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
          "sources" : [
             {
                "inputs" : {
@@ -80,6 +84,10 @@
          ]
       },
       "/actions/car" : {
+         "chords" : [],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
          "sources" : [
             {
                "inputs" : {
@@ -125,6 +133,15 @@
                },
                "mode" : "button",
                "path" : "/user/hand/left/input/x"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/car/in/exitscene"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/a"
             }
          ]
       },
@@ -314,13 +331,21 @@
                "path" : "/user/hand/right/input/b"
             },
             {
-               "inputs" : {},
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/default/in/exitscene"
+                  }
+               },
                "mode" : "button",
-               "path" : "/user/hand/left/input/x"
+               "path" : "/user/hand/right/input/a"
             }
          ]
       },
       "/actions/platformer" : {
+         "chords" : [],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
          "sources" : [
             {
                "inputs" : {
@@ -349,6 +374,10 @@
          ]
       },
       "/actions/truck" : {
+         "chords" : [],
+         "haptics" : [],
+         "poses" : [],
+         "skeleton" : [],
          "sources" : [
             {
                "inputs" : {
@@ -394,6 +423,15 @@
                },
                "mode" : "button",
                "path" : "/user/hand/left/input/y"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/truck/in/exitscene"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/a"
             }
          ]
       }

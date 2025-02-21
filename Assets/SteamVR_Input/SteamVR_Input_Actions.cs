@@ -41,6 +41,8 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_default_Incar;
         
+        private static SteamVR_Action_Boolean p_default_ExitScene;
+        
         private static SteamVR_Action_Vibration p_default_Haptic;
         
         private static SteamVR_Action_Vector2 p_platformer_Move;
@@ -67,6 +69,8 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_car_BackPeredacha;
         
+        private static SteamVR_Action_Boolean p_car_ExitScene;
+        
         private static SteamVR_Action_Single p_truck_Drive;
         
         private static SteamVR_Action_Single p_truck_BrakeDrive;
@@ -76,6 +80,8 @@ namespace Valve.VR
         private static SteamVR_Action_Boolean p_truck_ForwardPeredacha;
         
         private static SteamVR_Action_Boolean p_truck_BackPeredacha;
+        
+        private static SteamVR_Action_Boolean p_truck_ExitScene;
         
         public static SteamVR_Action_Boolean default_InteractUI
         {
@@ -170,6 +176,14 @@ namespace Valve.VR
             get
             {
                 return SteamVR_Actions.p_default_Incar.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean default_ExitScene
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_ExitScene.GetCopy<SteamVR_Action_Boolean>();
             }
         }
         
@@ -277,6 +291,14 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Action_Boolean car_ExitScene
+        {
+            get
+            {
+                return SteamVR_Actions.p_car_ExitScene.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
         public static SteamVR_Action_Single truck_Drive
         {
             get
@@ -317,6 +339,14 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Action_Boolean truck_ExitScene
+        {
+            get
+            {
+                return SteamVR_Actions.p_truck_ExitScene.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
         private static void InitializeActionArrays()
         {
             Valve.VR.SteamVR_Input.actions = new Valve.VR.SteamVR_Action[] {
@@ -332,6 +362,7 @@ namespace Valve.VR
                     SteamVR_Actions.default_SnapTurnLeft,
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_Incar,
+                    SteamVR_Actions.default_ExitScene,
                     SteamVR_Actions.default_Haptic,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
@@ -345,11 +376,13 @@ namespace Valve.VR
                     SteamVR_Actions.car_BrakeDrive,
                     SteamVR_Actions.car_ForwardPeredacha,
                     SteamVR_Actions.car_BackPeredacha,
+                    SteamVR_Actions.car_ExitScene,
                     SteamVR_Actions.truck_Drive,
                     SteamVR_Actions.truck_BrakeDrive,
                     SteamVR_Actions.truck_OutCar,
                     SteamVR_Actions.truck_ForwardPeredacha,
-                    SteamVR_Actions.truck_BackPeredacha};
+                    SteamVR_Actions.truck_BackPeredacha,
+                    SteamVR_Actions.truck_ExitScene};
             Valve.VR.SteamVR_Input.actionsIn = new Valve.VR.ISteamVR_Action_In[] {
                     SteamVR_Actions.default_InteractUI,
                     SteamVR_Actions.default_Teleport,
@@ -363,6 +396,7 @@ namespace Valve.VR
                     SteamVR_Actions.default_SnapTurnLeft,
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_Incar,
+                    SteamVR_Actions.default_ExitScene,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Steering,
@@ -375,11 +409,13 @@ namespace Valve.VR
                     SteamVR_Actions.car_BrakeDrive,
                     SteamVR_Actions.car_ForwardPeredacha,
                     SteamVR_Actions.car_BackPeredacha,
+                    SteamVR_Actions.car_ExitScene,
                     SteamVR_Actions.truck_Drive,
                     SteamVR_Actions.truck_BrakeDrive,
                     SteamVR_Actions.truck_OutCar,
                     SteamVR_Actions.truck_ForwardPeredacha,
-                    SteamVR_Actions.truck_BackPeredacha};
+                    SteamVR_Actions.truck_BackPeredacha,
+                    SteamVR_Actions.truck_ExitScene};
             Valve.VR.SteamVR_Input.actionsOut = new Valve.VR.ISteamVR_Action_Out[] {
                     SteamVR_Actions.default_Haptic};
             Valve.VR.SteamVR_Input.actionsVibration = new Valve.VR.SteamVR_Action_Vibration[] {
@@ -396,15 +432,18 @@ namespace Valve.VR
                     SteamVR_Actions.default_SnapTurnLeft,
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_Incar,
+                    SteamVR_Actions.default_ExitScene,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Brake,
                     SteamVR_Actions.buggy_Reset,
                     SteamVR_Actions.car_OutCar,
                     SteamVR_Actions.car_ForwardPeredacha,
                     SteamVR_Actions.car_BackPeredacha,
+                    SteamVR_Actions.car_ExitScene,
                     SteamVR_Actions.truck_OutCar,
                     SteamVR_Actions.truck_ForwardPeredacha,
-                    SteamVR_Actions.truck_BackPeredacha};
+                    SteamVR_Actions.truck_BackPeredacha,
+                    SteamVR_Actions.truck_ExitScene};
             Valve.VR.SteamVR_Input.actionsSingle = new Valve.VR.SteamVR_Action_Single[] {
                     SteamVR_Actions.default_Squeeze,
                     SteamVR_Actions.buggy_Throttle,
@@ -429,6 +468,7 @@ namespace Valve.VR
                     SteamVR_Actions.default_SnapTurnLeft,
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_Incar,
+                    SteamVR_Actions.default_ExitScene,
                     SteamVR_Actions.platformer_Move,
                     SteamVR_Actions.platformer_Jump,
                     SteamVR_Actions.buggy_Steering,
@@ -440,11 +480,13 @@ namespace Valve.VR
                     SteamVR_Actions.car_BrakeDrive,
                     SteamVR_Actions.car_ForwardPeredacha,
                     SteamVR_Actions.car_BackPeredacha,
+                    SteamVR_Actions.car_ExitScene,
                     SteamVR_Actions.truck_Drive,
                     SteamVR_Actions.truck_BrakeDrive,
                     SteamVR_Actions.truck_OutCar,
                     SteamVR_Actions.truck_ForwardPeredacha,
-                    SteamVR_Actions.truck_BackPeredacha};
+                    SteamVR_Actions.truck_BackPeredacha,
+                    SteamVR_Actions.truck_ExitScene};
         }
         
         private static void PreInitActions()
@@ -461,6 +503,7 @@ namespace Valve.VR
             SteamVR_Actions.p_default_SnapTurnLeft = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/SnapTurnLeft")));
             SteamVR_Actions.p_default_SnapTurnRight = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/SnapTurnRight")));
             SteamVR_Actions.p_default_Incar = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/Incar")));
+            SteamVR_Actions.p_default_ExitScene = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/ExitScene")));
             SteamVR_Actions.p_default_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create<SteamVR_Action_Vibration>("/actions/default/out/Haptic")));
             SteamVR_Actions.p_platformer_Move = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/platformer/in/Move")));
             SteamVR_Actions.p_platformer_Jump = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/platformer/in/Jump")));
@@ -474,11 +517,13 @@ namespace Valve.VR
             SteamVR_Actions.p_car_BrakeDrive = ((SteamVR_Action_Single)(SteamVR_Action.Create<SteamVR_Action_Single>("/actions/Car/in/BrakeDrive")));
             SteamVR_Actions.p_car_ForwardPeredacha = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/Car/in/ForwardPeredacha")));
             SteamVR_Actions.p_car_BackPeredacha = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/Car/in/BackPeredacha")));
+            SteamVR_Actions.p_car_ExitScene = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/Car/in/ExitScene")));
             SteamVR_Actions.p_truck_Drive = ((SteamVR_Action_Single)(SteamVR_Action.Create<SteamVR_Action_Single>("/actions/Truck/in/Drive")));
             SteamVR_Actions.p_truck_BrakeDrive = ((SteamVR_Action_Single)(SteamVR_Action.Create<SteamVR_Action_Single>("/actions/Truck/in/BrakeDrive")));
             SteamVR_Actions.p_truck_OutCar = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/Truck/in/OutCar")));
             SteamVR_Actions.p_truck_ForwardPeredacha = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/Truck/in/ForwardPeredacha")));
             SteamVR_Actions.p_truck_BackPeredacha = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/Truck/in/BackPeredacha")));
+            SteamVR_Actions.p_truck_ExitScene = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/Truck/in/ExitScene")));
         }
     }
 }
