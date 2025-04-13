@@ -24,7 +24,7 @@ public class TeleportManager : MonoBehaviour
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        
+        lineRenderer.gameObject.GetComponent<Renderer>().material = mat;
         sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         
         sphere.gameObject.GetComponent<Renderer>().material = mat; 
