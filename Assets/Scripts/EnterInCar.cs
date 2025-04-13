@@ -29,7 +29,7 @@ public class EnterInCar : MonoBehaviour
     private void FixedUpdate()
     {
         if (!inDrive) { return; }
-        if (enterButton.GetStateDown(SteamVR_Input_Sources.RightHand) && !enterButtonPressed)
+        if (enterButton.GetStateDown(SteamVR_Input_Sources.RightHand) && !enterButtonPressed || )
         {
             enterButtonPressed = true;
             StartCoroutine(Unpress());
