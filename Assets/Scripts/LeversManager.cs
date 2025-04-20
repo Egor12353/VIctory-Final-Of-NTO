@@ -4,62 +4,48 @@ using UnityEngine;
 
 public class Levers : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public Transform topOfJoystick;
+    public Transform topOfJoystick;  // Объект, который вы перемещаете (джойстик)
+    public Transform rotatingSphere;  // Сфера, которую нужно вращать
 
-    [SerializeField]
-    private float forwardBackwardTilt = 0;
-    [SerializeField]
-    private float sideToSideTilt = 0;
+    private Vector3 previousPosition; // Хранение предыдущей позиции
 
+    void Start()
+    {
+        // Инициализируем предыдущую позицию
+        previousPosition = topOfJoystick.position;
+    }
 
-
-    // Update is called once per frame
     void Update()
     {
-        forwardBackwardTilt = topOfJoystick.rotation.eulerAngles.x;
-        if (forwardBackwardTilt < 355 && forwardBackwardTilt > 290)
-        {
-            forwardBackwardTilt = Mathf.Abs(forwardBackwardTilt - 360);
-            Debug.Log("Backward" + forwardBackwardTilt);
+        // Вычисляем смещение позиции джойстика
+        Vector3 joystickOffset = topOfJoystick.position - previousPosition;
 
-    
-        }
-        else if (forwardBackwardTilt > 5 && forwardBackwardTilt < 74)
-        {
-            Debug.Log("Forward" + forwardBackwardTilt);
-        }
+        // Обновляем предыдущую позицию
+        previousPosition = topOfJoystick.position;
 
-        sideToSideTilt = topOfJoystick.rotation.eulerAngles.z;
-        if (sideToSideTilt < 355 && sideToSideTilt > 290)
-        {
-            sideToSideTilt = Mathf.Abs(sideToSideTilt - 360);
-            Debug.Log("Right" + sideToSideTilt);
-        }
+        // Обновляем вращение сферы в зависимости от перемещения джойстика
+        UpdateSphereRotation(joystickOffset);
+    }
 
-        else if(sideToSideTilt > 5 && sideToSideTilt < 74)
-        {
-            Debug.Log("Forward" + forwardBackwardTilt);
-        }
+    private void UpdateSphereRotation(Vector3 joystickOffset)
+    {
+        // Получаем текущее вращение сферы
+        Vector3 currentRotation = rotatingSphere.rotation.eulerAngles;
 
-        sideToSideTilt = topOfJoystick.rotation.eulerAngles.z;
-        if(sideToSideTilt < 355 && sideToSideTilt > 290)
-        {
-            sideToSideTilt = Mathf.Abs(sideToSideTilt - 360);
-            Debug.Log("Right" + sideToSideTilt);
-        }
+        // Обновляем угол по оси X в зависимости от смещения по Y
+        // Умножаем на 100 для увеличения чувствительности, можете настроить под себя
+        float rotationChange = joystickOffset.y * 100; 
+        Vector3 newRotation = new Vector3(currentRotation.x + rotationChange, currentRotation.y, currentRotation.z);
 
-        else if ( sideToSideTilt > 5 && sideToSideTilt < 74)
-        {
-            Debug.Log("Left" + sideToSideTilt);
-        }
-
+        // Применяем новое вращение к сфере
+        rotatingSphere.rotation = Quaternion.Euler(newRotation);
     }
 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Hand"))
         {
+            print("Hand detected!");
             transform.LookAt(other.transform.position, transform.up);
         }
     }

@@ -29,7 +29,7 @@ public class EnterInCar : MonoBehaviour
     private void FixedUpdate()
     {
         if (!inDrive) { return; }
-        if (enterButton.GetStateDown(SteamVR_Input_Sources.RightHand) && !enterButtonPressed || )
+        if (enterButton.GetStateDown(SteamVR_Input_Sources.RightHand) && !enterButtonPressed)
         {
             enterButtonPressed = true;
             StartCoroutine(Unpress());
@@ -50,6 +50,7 @@ public class EnterInCar : MonoBehaviour
         if (other.CompareTag("Hand") && enterButton.GetStateDown(SteamVR_Input_Sources.RightHand) && !enterButtonPressed)
         {
             enterButtonPressed = true;
+            teleportManager.enabled = false;
             StartCoroutine(Unpress());
             player = other.transform.root;
             player.position = seat.position;
@@ -57,7 +58,7 @@ public class EnterInCar : MonoBehaviour
             player.localEulerAngles = Vector3.zero;
             inDrive = true;
             carSet.Activate(SteamVR_Input_Sources.Any);
-            teleportManager.enabled = false;
+            
         }
     }
 
