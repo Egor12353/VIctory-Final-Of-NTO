@@ -4,141 +4,148 @@ using Valve.VR.InteractionSystem;
 
 public class CarController : MonoBehaviour
 {
-    [SerializeField]
-    private Rigidbody rb;
-    private float horizontalInput;
-    private float currentSteerAngle;
+    [Header("References")]
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private LinearDrive ld;
+    [SerializeField] private CircularDrive steeringWheel;
+    [SerializeField] private AudioSource idleMotorSound;
 
-    [SerializeField] private float motorForce, brakeForce, maxSteerAngle;
+    [Header("Wheel Colliders")]
+    [SerializeField] private WheelCollider frontLeftWheelCollider;
+    [SerializeField] private WheelCollider frontRightWheelCollider;
+    [SerializeField] private WheelCollider rearLeftWheelCollider;
+    [SerializeField] private WheelCollider rearRightWheelCollider;
 
-    [SerializeField] private WheelCollider frontLeftWheelCollider, frontRightWheelCollider;
-    [SerializeField] private WheelCollider rearLeftWheelCollider, rearRightWheelCollider;
+    [Header("Wheel Transforms")]
+    [SerializeField] private Transform frontLeftWheelTransform;
+    [SerializeField] private Transform frontRightWheelTransform;
+    [SerializeField] private Transform rearLeftWheelTransform;
+    [SerializeField] private Transform rearRightWheelTransform;
 
-    [SerializeField] private Transform frontLeftWheelTransform, frontRightWheelTransform;
-    [SerializeField] private Transform rearLeftWheelTransform, rearRightWheelTransform;
+    [Header("VR Input Actions")]
+    [SerializeField] private SteamVR_Action_Single throttleButton;
+    [SerializeField] private SteamVR_Action_Single brakeButton;
+    [SerializeField] private SteamVR_Action_Boolean fdButton;
+    [SerializeField] private SteamVR_Action_Boolean backButton;
 
-    [SerializeField]
-    private SteamVR_Action_Single throttleButton;
+    [Header("Settings")]
+    [SerializeField] private float motorForce = 2000f;
+    [SerializeField] private float brakeForce = 3000f;
+    [SerializeField] private float maxSteerAngle = 30f;
+    [SerializeField] private float idleSpeed = 5f;
+    [SerializeField] private float backwardSpeedMultiplier = 1.3f;
 
-    [SerializeField]
-    private SteamVR_Action_Single brakeButton;
-
-    [SerializeField]
-    private SteamVR_Action_Boolean fdButton;
-
-    [SerializeField]
-    private SteamVR_Action_Boolean backButton;
-
-    private float throttle = 0;
-
-    private float currentSettedSpeed = 0;
-    private float currentAngle = 0;
-
+    private float throttleInput;
     private float brakeInput;
-    private float currentBrakeForce = 0;
-    public bool fd = true;
-    
-    [SerializeField]
-    private CircularDrive steeringWheel;
-
-    [SerializeField]
-    private AudioSource idleMotorSound;
-    public bool gorod = false;
+    private float steeringInput;
+    private bool isMovingForward = true;
+    public bool isStopped = false;
+    public bool inCityMode = false;
 
     private void FixedUpdate()
     {
-        if (fdButton.GetStateDown(SteamVR_Input_Sources.LeftHand))
+        UpdateCarState();
+
+        if (!isStopped)
         {
-            fd = true;
+            GetInput();
+            HandleMotor();
+            HandleSteering();
+            HandleBrake();
         }
-        if (backButton.GetStateDown(SteamVR_Input_Sources.LeftHand))
+        else
         {
-            fd = false;
+            StopVehicle();
         }
-        GetInput();
-        HandleMotor();
-        HandleSteering();
+
         UpdateWheels();
-        HandleBrake();
+    }
+
+    private void UpdateCarState()
+    {
+        isStopped = ld.stop;
+        isMovingForward = !isStopped && ld.fd;
+        inCityMode = isMovingForward;
     }
 
     private void GetInput()
     {
+        // Throttle and sound
+        throttleInput = throttleButton.GetAxis(SteamVR_Input_Sources.RightHand);
+        idleMotorSound.pitch = 1 + throttleInput / 3;
+        idleMotorSound.volume = 0.5f + throttleInput / 2;
 
-        horizontalInput = 0;
-
-        throttle = throttleButton.GetAxis(SteamVR_Input_Sources.RightHand);
-        idleMotorSound.pitch = 1 + throttle / 3;
-        idleMotorSound.volume = 0.5f + throttle / 2;
-
-
+        // Brake and steering
         brakeInput = brakeButton.GetAxis(SteamVR_Input_Sources.LeftHand);
-        horizontalInput = steeringWheel.outAngle / 540;
+        steeringInput = steeringWheel.outAngle / 540;
     }
 
     private void HandleMotor()
     {
-        if (fd == false) 
-        {
+        float speed = throttleInput > 0 ? throttleInput * motorForce : idleSpeed;
+        float direction = isMovingForward ? -1 : backwardSpeedMultiplier;
 
+        float torque = speed * direction;
 
-
-
-            gorod = false;
-        frontLeftWheelCollider.motorTorque = throttle * motorForce;
-        frontRightWheelCollider.motorTorque = throttle * motorForce;
-        rearLeftWheelCollider.motorTorque = throttle * motorForce;
-        rearRightWheelCollider.motorTorque = throttle * motorForce;
+        ApplyTorqueToAllWheels(torque);
     }
-        if (fd == true)
-        {
 
-            gorod = true;
-            frontLeftWheelCollider.motorTorque = -throttle * motorForce;
-            frontRightWheelCollider.motorTorque = -throttle * motorForce;
-            rearLeftWheelCollider.motorTorque = -throttle * motorForce;
-            rearRightWheelCollider.motorTorque = -throttle * motorForce;
-        }
+    private void ApplyTorqueToAllWheels(float torque)
+    {
+        frontLeftWheelCollider.motorTorque = torque;
+        frontRightWheelCollider.motorTorque = torque;
+        rearLeftWheelCollider.motorTorque = torque;
+        rearRightWheelCollider.motorTorque = torque;
     }
 
     private void HandleBrake()
     {
-        currentBrakeForce = brakeInput * brakeForce;
-        frontLeftWheelCollider.brakeTorque = currentBrakeForce;
-        frontRightWheelCollider.brakeTorque = currentBrakeForce;
-        rearLeftWheelCollider.brakeTorque = currentBrakeForce;
-        rearRightWheelCollider.brakeTorque = currentBrakeForce;
+        float brakeTorque = brakeInput * brakeForce;
+        ApplyBrakeToAllWheels(brakeTorque);
+    }
+
+    private void ApplyBrakeToAllWheels(float brakeTorque)
+    {
+        frontLeftWheelCollider.brakeTorque = brakeTorque;
+        frontRightWheelCollider.brakeTorque = brakeTorque;
+        rearLeftWheelCollider.brakeTorque = brakeTorque;
+        rearRightWheelCollider.brakeTorque = brakeTorque;
+    }
+
+    private void StopVehicle()
+    {
+        ApplyTorqueToAllWheels(0);
+        ApplyBrakeToAllWheels(brakeForce);
     }
 
     private void HandleSteering()
     {
-        currentSteerAngle = maxSteerAngle * horizontalInput;
-        if (horizontalInput >= 0)
+        float steerAngle = maxSteerAngle * steeringInput;
+
+        if (steeringInput >= 0)
         {
-            frontLeftWheelCollider.steerAngle = currentSteerAngle;
-            frontRightWheelCollider.steerAngle = currentSteerAngle + horizontalInput * 10;
+            frontLeftWheelCollider.steerAngle = steerAngle;
+            frontRightWheelCollider.steerAngle = steerAngle + steeringInput * 10;
         }
-        else if (horizontalInput < 0)
+        else
         {
-            frontLeftWheelCollider.steerAngle = currentSteerAngle + horizontalInput * 10;
-            frontRightWheelCollider.steerAngle = currentSteerAngle;
+            frontLeftWheelCollider.steerAngle = steerAngle + steeringInput * 10;
+            frontRightWheelCollider.steerAngle = steerAngle;
         }
     }
 
     private void UpdateWheels()
     {
-        UpdateSingleWheel(frontLeftWheelCollider, frontLeftWheelTransform);
-        UpdateSingleWheel(frontRightWheelCollider, frontRightWheelTransform);
-        UpdateSingleWheel(rearRightWheelCollider, rearRightWheelTransform);
-        UpdateSingleWheel(rearLeftWheelCollider, rearLeftWheelTransform);
+        UpdateWheel(frontLeftWheelCollider, frontLeftWheelTransform);
+        UpdateWheel(frontRightWheelCollider, frontRightWheelTransform);
+        UpdateWheel(rearLeftWheelCollider, rearLeftWheelTransform);
+        UpdateWheel(rearRightWheelCollider, rearRightWheelTransform);
     }
 
-    private void UpdateSingleWheel(WheelCollider wheelCollider, Transform wheelTransform)
+    private void UpdateWheel(WheelCollider collider, Transform wheelTransform)
     {
-        Vector3 pos;
-        Quaternion rot;
-        wheelCollider.GetWorldPose(out pos, out rot);
-        wheelTransform.rotation = rot;
-        wheelTransform.position = pos;
+        collider.GetWorldPose(out Vector3 position, out Quaternion rotation);
+        wheelTransform.position = position;
+        wheelTransform.rotation = rotation;
     }
 }
