@@ -1,65 +1,73 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using Valve.VR;
 
 public class EnterInCar : MonoBehaviour
 {
-    [SerializeField]
-    private SteamVR_Action_Boolean enterButton;
-    [SerializeField]
-    private SteamVR_Action_Boolean exitButton;
-    [SerializeField]
-    private SteamVR_ActionSet carSet;
-    [SerializeField]
-    private SteamVR_ActionSet defaultSet;
-    [SerializeField]
-    private Transform seat;
-    [SerializeField]
-    private Transform exitPoint;
+    [Header("VR Input")]
+    [SerializeField] private SteamVR_Action_Boolean enterButton;
+    [SerializeField] private SteamVR_ActionSet carSet;
+    [SerializeField] private SteamVR_ActionSet defaultSet;
 
-    private bool enterButtonPressed = false;
+    [Header("References")]
+    [SerializeField] private Transform seat;
+    [SerializeField] private Transform exitPoint;
+    [SerializeField] private TeleportManager teleportManager;
+
+    [Header("Vehicle Type")]
+    public bool isInTruck; // true - грузовик, false - автобус
+
+    [Header("State")]
     public bool inDrive = false;
 
+    private bool enterButtonPressed = false;
     private Transform player;
-    [SerializeField]
-    private TeleportManager teleportManager;
 
     private void FixedUpdate()
     {
-        if (!inDrive) { return; }
+        if (!inDrive) return;
+
         if (enterButton.GetStateDown(SteamVR_Input_Sources.RightHand) && !enterButtonPressed)
         {
-            enterButtonPressed = true;
-            StartCoroutine(Unpress());
-            player.parent = null;
-            player.transform.position = exitPoint.position;
-            player.transform.rotation = exitPoint.rotation;
-            inDrive = false;
-            teleportManager.enabled = true;
-            carSet.Deactivate(SteamVR_Input_Sources.Any);
+            ExitVehicle();
         }
     }
+
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Hand"))
-        {
-            print("Hand");
-        }
         if (other.CompareTag("Hand") && enterButton.GetStateDown(SteamVR_Input_Sources.RightHand) && !enterButtonPressed)
         {
-            enterButtonPressed = true;
-            teleportManager.enabled = false;
-            StartCoroutine(Unpress());
-            player = other.transform.root;
-            player.position = seat.position;
-            player.transform.root.SetParent(seat.transform);
-            player.localEulerAngles = Vector3.zero;
-            inDrive = true;
-            carSet.Activate(SteamVR_Input_Sources.Any);
-            
+            EnterVehicle(other.transform.root);
         }
+    }
+
+    private void EnterVehicle(Transform playerTransform)
+    {
+        enterButtonPressed = true;
+        teleportManager.enabled = false;
+        StartCoroutine(Unpress());
+
+        player = playerTransform;
+        player.position = seat.position;
+        player.SetParent(seat);
+        player.localEulerAngles = Vector3.zero;
+
+        inDrive = true;
+        carSet.Activate(SteamVR_Input_Sources.Any);
+    }
+
+    private void ExitVehicle()
+    {
+        enterButtonPressed = true;
+        StartCoroutine(Unpress());
+
+        player.SetParent(null);
+        player.position = exitPoint.position;
+        player.rotation = exitPoint.rotation;
+
+        inDrive = false;
+        teleportManager.enabled = true;
+        carSet.Deactivate(SteamVR_Input_Sources.Any);
     }
 
     private IEnumerator Unpress()
