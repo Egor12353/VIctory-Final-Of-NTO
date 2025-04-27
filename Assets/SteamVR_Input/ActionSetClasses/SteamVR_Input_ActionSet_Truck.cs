@@ -64,5 +64,13 @@ namespace Valve.VR
                 return SteamVR_Actions.truck_ExitScene;
             }
         }
+        
+        public virtual SteamVR_Action_Boolean CarEngine
+        {
+            get
+            {
+                return SteamVR_Actions.truck_CarEngine;
+            }
+        }
     }
 }

@@ -26,8 +26,7 @@ public class CarController : MonoBehaviour
     [Header("VR Inputs")]
     public SteamVR_Action_Single throttleButton;
     public SteamVR_Action_Single brakeButton;
-    public SteamVR_Action_Boolean fdButton;
-    public SteamVR_Action_Boolean backButton;
+    public SteamVR_Action_Boolean CarEngine;
 
     [Header("Settings")]
     public float motorForce = 2000f;

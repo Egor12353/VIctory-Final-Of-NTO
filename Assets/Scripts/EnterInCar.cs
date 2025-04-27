@@ -18,6 +18,8 @@ public class EnterInCar : MonoBehaviour
     private Transform seat;
     [SerializeField]
     private Transform exitPoint;
+    [Header("Vehicle Type")]
+    public bool isInTruck;
 
     private bool enterButtonPressed = false;
     public bool inDrive = false;

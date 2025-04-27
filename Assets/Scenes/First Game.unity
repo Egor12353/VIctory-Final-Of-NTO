@@ -48858,7 +48858,7 @@ Transform:
   m_GameObject: {fileID: 981332172}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.538, y: 1.638, z: -10.242}
+  m_LocalPosition: {x: 0.914, y: 1.253, z: -10.242}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -55624,15 +55624,18 @@ MonoBehaviour:
   enterButton:
     actionPath: /actions/default/in/Incar
     needsReinit: 0
+  exitButton:
+    actionPath: 
+    needsReinit: 0
   carSet:
     actionSetPath: /actions/Car
   defaultSet:
     actionSetPath: /actions/default
   seat: {fileID: 588439010}
   exitPoint: {fileID: 1136550981}
-  teleportManager: {fileID: 983190300}
   isInTruck: 0
   inDrive: 0
+  teleportManager: {fileID: 983190300}
 --- !u!1 &1136926518
 GameObject:
   m_ObjectHideFlags: 0
@@ -84351,15 +84354,18 @@ MonoBehaviour:
   enterButton:
     actionPath: /actions/default/in/Incar
     needsReinit: 0
+  exitButton:
+    actionPath: 
+    needsReinit: 0
   carSet:
     actionSetPath: /actions/Truck
   defaultSet:
     actionSetPath: /actions/default
   seat: {fileID: 981332173}
   exitPoint: {fileID: 1789440381}
-  teleportManager: {fileID: 983190300}
   isInTruck: 1
   inDrive: 0
+  teleportManager: {fileID: 983190300}
 --- !u!65 &1789440380
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -99051,18 +99057,15 @@ MonoBehaviour:
   brakeButton:
     actionPath: /actions/Car/in/BrakeDrive
     needsReinit: 0
-  fdButton:
-    actionPath: /actions/Car/in/ForwardPeredacha
-    needsReinit: 0
-  backButton:
-    actionPath: /actions/Car/in/BackPeredacha
+  CarEngine:
+    actionPath: /actions/Car/in/CarEngine
     needsReinit: 0
   motorForce: 500
   brakeForce: 2000
   maxSteerAngle: 30
   idleSpeed: 5
   backwardSpeedMultiplier: 0.25
-  isInTruck: 1
+  isInTruck: 0
   isStopped: 0
   inCityMode: 0
   enterInCar: {fileID: 1136550984}
@@ -99081,6 +99084,9 @@ MonoBehaviour:
   ignitionSound: {fileID: 8300000, guid: 3051ee20023e1f341815707c7ac4e344, type: 3}
   audioSource: {fileID: 2051849312}
   successRate: 0.772
+  carEng:
+    actionPath: /actions/Car/in/CarEngine
+    needsReinit: 0
   carController: {fileID: 919132147825212400}
   enterInCar: {fileID: 1136550984}
   isEngineStarted: 0
@@ -99115,7 +99121,7 @@ Rigidbody:
   m_GameObject: {fileID: 919132148616344430}
   serializedVersion: 4
   m_Mass: 1000
-  m_Drag: 0
+  m_Drag: 10
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -99164,13 +99170,10 @@ MonoBehaviour:
   brakeButton:
     actionPath: /actions/Truck/in/BrakeDrive
     needsReinit: 0
-  fdButton:
-    actionPath: /actions/Truck/in/ForwardPeredacha
+  CarEngine:
+    actionPath: /actions/Truck/in/CarEngine
     needsReinit: 0
-  backButton:
-    actionPath: /actions/Truck/in/BackPeredacha
-    needsReinit: 0
-  motorForce: 1000
+  motorForce: 500
   brakeForce: 1000
   maxSteerAngle: 30
   idleSpeed: 5
@@ -99236,6 +99239,9 @@ MonoBehaviour:
   ignitionSound: {fileID: 8300000, guid: 2339ff75c5cdc7a4b9a01da77f29e8b6, type: 3}
   audioSource: {fileID: 2051849312}
   successRate: 0.523
+  carEng:
+    actionPath: /actions/Truck/in/CarEngine
+    needsReinit: 0
   carController: {fileID: 919132148616344433}
   enterInCar: {fileID: 1789440379}
   isEngineStarted: 0
@@ -108730,12 +108736,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   minAngle: -720
-  freezeOnMin: 1
+  freezeOnMin: 0
   onMinAngle:
     m_PersistentCalls:
       m_Calls: []
   maxAngle: 720
-  freezeOnMax: 1
+  freezeOnMax: 0
   onMaxAngle:
     m_PersistentCalls:
       m_Calls: []

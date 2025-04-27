@@ -115,6 +115,11 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/Car/in/CarEngine",
+      "type": "boolean",
+      "requirement": "suggested"
+    },
+    {
       "name": "/actions/Truck/in/Drive",
       "type": "vector1"
     },
@@ -136,6 +141,10 @@
     },
     {
       "name": "/actions/Truck/in/ExitScene",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/Truck/in/CarEngine",
       "type": "boolean"
     }
   ],

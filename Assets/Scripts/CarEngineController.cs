@@ -1,13 +1,15 @@
 using UnityEngine;
 using System.Collections;
-
+using Valve.VR;
+using Valve.VR.InteractionSystem;
 public class CarEngineController : MonoBehaviour
 {
     [Header("Engine Sounds")]
     public AudioClip ignitionSound;
     public AudioSource audioSource;
     [Range(0, 1)] public float successRate = 0.5f;
-
+    [SerializeField]
+    public SteamVR_Action_Boolean carEng;
     [Header("References")]
     public CarController carController;
     public EnterInCar enterInCar;
@@ -32,10 +34,9 @@ public class CarEngineController : MonoBehaviour
 
     void Update()
     {
-        // ѕровер€ем, находитс€ ли игрок в этом транспортном средстве
         if (!enterInCar.inDrive) return;
 
-        if (enterInCar.isInTruck)
+        if (enterInCar.isInTruck && enterInCar.inDrive == true)
         {
             HandleTruckInput();
         }
@@ -47,27 +48,31 @@ public class CarEngineController : MonoBehaviour
 
     void HandleTruckInput()
     {
-        if (Input.GetKeyDown(KeyCode.B) && !isEngineStarted && !isIgnitionPlaying)
+        if (carEng.GetStateDown(SteamVR_Input_Sources.RightHand)) // R1
         {
-            StartCoroutine(AttemptStartEngine());
-        }
-
-        if (Input.GetKeyDown(KeyCode.N) && isEngineStarted)
-        {
-            StopEngine();
+            if (!isEngineStarted && !isIgnitionPlaying)
+            {
+                StartCoroutine(AttemptStartEngine());
+            }
+            else if (isEngineStarted)
+            {
+                StopEngine();
+            }
         }
     }
 
     void HandleBusInput()
     {
-        if (Input.GetKeyDown(KeyCode.B) && !isEngineStarted)
+        if (carEng.GetStateDown(SteamVR_Input_Sources.RightHand)) // R1
         {
-            StartCoroutine(StartBusEngine());
-        }
-
-        if (Input.GetKeyDown(KeyCode.N) && isEngineStarted)
-        {
-            StopEngine();
+            if (!isEngineStarted && !isIgnitionPlaying)
+            {
+                StartCoroutine(StartBusEngine());
+            }
+            else if (isEngineStarted)
+            {
+                StopEngine();
+            }
         }
     }
 
@@ -76,7 +81,7 @@ public class CarEngineController : MonoBehaviour
         isIgnitionPlaying = true;
         PlaySound(ignitionSound);
 
-        yield return new WaitForSeconds(ignitionSound.length - 10f);
+        yield return new WaitForSeconds(ignitionSound.length - 15f);
 
         if (Random.value <= successRate)
         {
@@ -84,7 +89,7 @@ public class CarEngineController : MonoBehaviour
         }
         else
         {
-            print("√рузовик не завелс€!");
+            print("Engine Failed to Start!");
             isIgnitionPlaying = false;
         }
     }
@@ -101,7 +106,7 @@ public class CarEngineController : MonoBehaviour
 
     void StartEngineRunning()
     {
-        print("sound");
+        print("Engine Started");
         isEngineStarted = true;
         isIgnitionPlaying = false;
 
