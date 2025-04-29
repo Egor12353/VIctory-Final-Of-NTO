@@ -1343,6 +1343,37 @@ WheelCollider:
   m_LayerOverridePriority: 0
   m_Enabled: 1
   m_ProvidesContacts: 0
+--- !u!1 &255655053
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 255655054}
+  m_Layer: 0
+  m_Name: seat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &255655054
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255655053}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.00419, y: 0.00156, z: -0.00207}
+  m_LocalScale: {x: 0.0066666664, y: 0.0066666664, z: 0.0066666664}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 13988930}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &256902537
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1663,7 +1694,7 @@ GameObject:
   - component: {fileID: 328597203}
   - component: {fileID: 328597202}
   - component: {fileID: 328597201}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3055,11 +3086,11 @@ MonoBehaviour:
     actionSetPath: /actions/Car
   defaultSet:
     actionSetPath: /actions/default
-  seat: {fileID: 0}
-  exitPoint: {fileID: 0}
+  seat: {fileID: 255655054}
+  exitPoint: {fileID: 575007304}
   isInTruck: 0
   inDrive: 0
-  teleportManager: {fileID: 0}
+  teleportManager: {fileID: 419496904}
 --- !u!65 &575007306
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9370,19 +9401,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.804
+      value: -119.06
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 79.18
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.901458
+      value: 179.22
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalRotation.x
@@ -9390,7 +9421,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalRotation.z
@@ -9402,7 +9433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 447954, guid: dc06161b6d97feb419f45f03b62e14b9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -10187,6 +10218,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8961359253771211100, guid: 4763835c601970c43b66de8530a4a054,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4763835c601970c43b66de8530a4a054,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10296,6 +10332,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Intensity
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6507901977716847365, guid: 4763835c601970c43b66de8530a4a054,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -15613,6 +15654,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 562287492}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: c3ab19d27897ecb4da9766f6ab188409,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 255655054}
     - targetCorrespondingSourceObject: {fileID: 7082897813285705517, guid: c3ab19d27897ecb4da9766f6ab188409,
         type: 3}
       insertIndex: -1
