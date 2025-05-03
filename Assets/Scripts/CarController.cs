@@ -160,4 +160,11 @@ public class CarController : MonoBehaviour
         wheelTransform.position = position;
         wheelTransform.rotation = rotation;
     }
+    // В вашем скрипте CarController
+    public float GetCurrentSpeedKPH()
+    {
+        // Используем ссылку на Rigidbody из полей класса (rb)
+        
+        return rb.velocity.magnitude * 4.5f;
+    }
 }
