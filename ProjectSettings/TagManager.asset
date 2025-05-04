@@ -15,6 +15,11 @@ TagManager:
   - Casseta4
   - rightHand
   - Conus
+  - Vehicle
+  - exit scene
+  - restart
+  - On/Off Music
+  - MusicPlayer
   layers:
   - Default
   - TransparentFX

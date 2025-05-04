@@ -18,17 +18,20 @@ public class ConesTrigger : MonoBehaviour
     public float fadeDuration = 1f;
 
     [Header("UI References")]
-    public CanvasGroup firstWarningCanvas;
-    public CanvasGroup secondWarningCanvas;
+    public Canvas firstWarningCanvas;
+    public Canvas secondWarningCanvas;
 
     private int conesHitCount;
     private HashSet<GameObject> hitCones = new HashSet<GameObject>();
     private bool restarting;
+    private Coroutine firstCanvasFade;
+    private Coroutine secondCanvasFade;
 
     private void Start()
     {
-        SetCanvasAlpha(firstWarningCanvas, 0f);
-        SetCanvasAlpha(secondWarningCanvas, 0f);
+        // Отключаем оба канваса при старте
+        firstWarningCanvas.enabled = false;
+        secondWarningCanvas.enabled = false;
     }
 
     private void FixedUpdate()
@@ -70,31 +73,40 @@ public class ConesTrigger : MonoBehaviour
         if (conesHitCount >= secondCanvasThreshold && !restarting)
         {
             restarting = true;
-            StartCoroutine(FadeCanvas(secondWarningCanvas, 1f));
+            ShowCanvas(secondWarningCanvas);
             StartCoroutine(RestartSceneAfterDelay());
         }
         else if (conesHitCount >= firstCanvasThreshold)
         {
-            StartCoroutine(FadeCanvas(firstWarningCanvas, 1f));
+            ShowCanvas(firstWarningCanvas);
         }
         else
         {
-            StartCoroutine(FadeCanvas(firstWarningCanvas, 0f));
+            HideCanvas(firstWarningCanvas);
         }
     }
 
-    private IEnumerator FadeCanvas(CanvasGroup canvas, float targetAlpha)
+    private void ShowCanvas(Canvas canvas)
     {
-        float startAlpha = canvas.alpha;
-        float time = 0f;
-
-        while (time < fadeDuration)
+        if (canvas == firstWarningCanvas)
         {
-            time += Time.deltaTime;
-            canvas.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / fadeDuration);
-            yield return null;
+            if (secondCanvasFade != null) StopCoroutine(secondCanvasFade);
+            if (!canvas.enabled) canvas.enabled = true;
         }
-        canvas.alpha = targetAlpha;
+        else if (canvas == secondWarningCanvas)
+        {
+            if (firstCanvasFade != null) StopCoroutine(firstCanvasFade);
+            firstWarningCanvas.enabled = false;
+            if (!canvas.enabled) canvas.enabled = true;
+        }
+    }
+
+    private void HideCanvas(Canvas canvas)
+    {
+        if (canvas.enabled)
+        {
+            canvas.enabled = false;
+        }
     }
 
     private IEnumerator RestartSceneAfterDelay()
@@ -103,16 +115,12 @@ public class ConesTrigger : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    private void SetCanvasAlpha(CanvasGroup canvas, float alpha)
-    {
-        canvas.alpha = alpha;
-    }
-
     public void ResetConesCount()
     {
         conesHitCount = 0;
         hitCones.Clear();
-        StartCoroutine(FadeCanvas(firstWarningCanvas, 0f));
-        StartCoroutine(FadeCanvas(secondWarningCanvas, 0f));
+        HideCanvas(firstWarningCanvas);
+        HideCanvas(secondWarningCanvas);
+        restarting = false;
     }
 }
