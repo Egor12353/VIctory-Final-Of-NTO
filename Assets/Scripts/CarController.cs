@@ -165,6 +165,6 @@ public class CarController : MonoBehaviour
     {
         // Используем ссылку на Rigidbody из полей класса (rb)
         
-        return rb.velocity.magnitude * 4.5f;
+        return rb.velocity.magnitude * 5.6f;
     }
 }
