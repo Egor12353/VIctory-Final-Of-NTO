@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public class pashalko : MonoBehaviour
+public class SoundTrigger : MonoBehaviour
 {
     [Header("Sound Settings")]
     [SerializeField] private AudioClip soundClip; // Перетащите сюда аудиофайл в инспекторе
     [SerializeField] private float volume = 1f;
+    [SerializeField] private string targetTag = "Hand"; // Тег объекта, который должен активировать звук
 
     private AudioSource audioSource;
 
@@ -16,11 +17,12 @@ public class pashalko : MonoBehaviour
         audioSource.volume = volume;
     }
 
-    private void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        // Проверяем нажатие клавиши M
-        if (Input.GetKeyDown(KeyCode.M))
+        // Проверяем тег объекта, который вошел в триггер
+        if (other.CompareTag(targetTag))
         {
+            Debug.Log("Объект с тегом 'рука' вошел в триггер");
             PlaySound();
         }
     }
