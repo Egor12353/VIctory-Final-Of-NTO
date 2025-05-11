@@ -102402,7 +102402,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.32
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -119110,7 +119110,7 @@ PrefabInstance:
     - target: {fileID: 6161600890382644172, guid: d67fc1172620a38438d3c6bdc0baec72,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -121004,6 +121004,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: canvas1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4379407041580156904, guid: 40a68fdeca1265e43999892c87de081d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5835219431127819846, guid: 40a68fdeca1265e43999892c87de081d,
         type: 3}
